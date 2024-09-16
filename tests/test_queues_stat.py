@@ -1,11 +1,9 @@
 import os
 import sys
+import importlib
 
 # noinspection PyUnresolvedReferences
 import tests.mock_tables.dbconnector
-
-modules_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(modules_path, 'src'))
 
 from unittest import TestCase
 
@@ -20,6 +18,7 @@ from sonic_ax_impl.mibs.vendor.cisco import ciscoSwitchQosMIB
 class TestQueueCounters(TestCase):
     @classmethod
     def setUpClass(cls):
+        importlib.reload(ciscoSwitchQosMIB)
         cls.lut = MIBTable(ciscoSwitchQosMIB.csqIfQosGroupStatsTable)
 
         # Update MIBs
